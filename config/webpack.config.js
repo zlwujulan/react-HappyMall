@@ -259,6 +259,9 @@ module.exports = function(webpackEnv) {
       modules: ['node_modules', paths.appNodeModules].concat(
         modules.additionalModulePaths || []
       ),
+      // alias:{
+      //   page:path.resolve(__dirname,'src/page')
+      // },
       // These are the reasonable defaults supported by the Node ecosystem.
       // We also include JSX as a common component filename extension to support
       // some tools, although we do not recommend using it, see:
@@ -329,6 +332,14 @@ module.exports = function(webpackEnv) {
               options: {
                 limit: 10000,
                 name: 'static/media/[name].[hash:8].[ext]',
+              },
+            },
+            {
+              test:/\.(eot|svg|ttf|woff|woff2|otf)$/,
+              loader: require.resolve('url-loader'),
+              options: {
+                limit: 10000,
+               
               },
             },
             // Process application JS with Babel.
@@ -474,6 +485,7 @@ module.exports = function(webpackEnv) {
         },
       ],
     },
+   
     plugins: [
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin(
