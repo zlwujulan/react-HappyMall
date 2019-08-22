@@ -3,7 +3,7 @@ import React from 'react';
 // import './App.css';
 import Home from './page/home/index.jsx'
 import Login from './page/login/index.jsx'
-import {HashRouter as Router,Route,Redirect,Switch} from 'react-router-dom' 
+import {BrowserRouter as Router,Route,Redirect,Switch} from 'react-router-dom' 
 import Layout  from './components/layout/index.jsx'
 import ErrorPage from './page/error/index.jsx'
 import UserList from './page/user/index.jsx'

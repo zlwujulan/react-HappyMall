@@ -12,7 +12,8 @@ class UserList extends React.Component {
       super(props)
       this.state={
         pageNum:1,
-        list:[]
+        list:[],
+        firstLoading:true
       }
 
    }
@@ -30,13 +31,38 @@ class UserList extends React.Component {
    }
    loadUserList(){
        _user.getUserList(this.state.pageNum).then(res=>{
-           this.setState(res)
+           this.setState(res,()=>{
+               this.setState({
+                   firstLoading:false
+               })
+           })
        },errMsg=>{
+           this.setState({
+               list:[]
+           })
         _mm.errorTips(errMsg)
         })
    }
- 
+
    render(){
+      let  listBody=this.state.list.map((user,index)=>{
+        return (
+            <tr key={index}>
+            <td>{user.id}</td>
+            <td>{user.name}</td>
+            <td>{user.email}</td>
+            <td>{user.phone}</td>
+            <td>{new Date(user.createTime).toLocaleDateString()}</td>
+            </tr>
+        );
+       })
+       let listError = (
+           <tr>
+               <td colSpan="5">
+                {this.state.firstLoading?'正在加載':'沒有找到相應的結果'}</td>
+           </tr>
+       )
+       let tableBody = this.state.list.length>0?listBody:listError
           return(
             <div id="page-wrapper">
            
@@ -55,17 +81,7 @@ class UserList extends React.Component {
                    </thead>
                    <tbody>
                        {
-                           this.state.list.map((user,index) =>{
-                               return (
-                                   <tr key={index}>
-                                   <td>{user.id}</td>
-                                   <td>{user.name}</td>
-                                   <td>{user.email}</td>
-                                   <td>{user.phone}</td>
-                                   <td>{user.createTime}</td>
-                                   </tr>
-                               );
-                           })
+                          tableBody
                        }
                       
                    </tbody>
