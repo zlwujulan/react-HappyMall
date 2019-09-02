@@ -3,7 +3,7 @@ import React from 'react';
 // import './App.css';
 import Home from './page/home/index.jsx'
 import Login from './page/login/index.jsx'
-import Product from './page/product/index/index.jsx'
+import ProductRouter from './page/product/index/router.jsx'
 import {BrowserRouter as Router,Route,Redirect,Switch} from 'react-router-dom' 
 import Layout  from './components/layout/index.jsx'
 import ErrorPage from './page/error/index.jsx'
@@ -14,8 +14,8 @@ class App extends React.Component {
          <Layout>
                <Switch>
                         <Route path="/" exact component={Home}></Route>
-                        <Route path="/product"  component={Product}></Route>
-                        <Route path="/product-category"  component={Home}></Route>
+                        <Route path="/product"  component={ProductRouter}></Route>
+                        <Route path="/product-category"  component={ProductRouter}></Route>
                         <Route path="/user/index"  component={UserList}></Route>
                         <Redirect exact from="/user" to="/user/index"></Redirect>
                         <Route path="/order"  component={Home}></Route>

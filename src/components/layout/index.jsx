@@ -2,6 +2,7 @@ import React from 'react';
 import TopNav from '../../components/nav-side/index.jsx';
 import SideNav from '../../components/nav-top/index.jsx';
 import './theme.css'
+import './index.css'
 class Layout extends React.Component{
     constructor(props){
         super(props)
