@@ -4,6 +4,8 @@ import MUtil from '../../../util/mm.jsx'
 import Product from '../../../service/product-service.jsx'
 import CategorySelector from './category-selector.jsx'
 import FileUploader from '../../../util/file-uploader/index.jsx'
+import './save.css'
+import { of } from 'rxjs';
 const _mm = new MUtil();
 const _product = new Product();
 class ProductSave extends React.Component {
@@ -21,13 +23,26 @@ class ProductSave extends React.Component {
     }
     //上传图片陈宫
     onUploadSuccess(res){
+       let subImages = this.state.subImages;
+       subImages.push(res)
      this.setState({
-        subImages:this.state.subImages.push(res)
+        subImages:subImages
+        // subImages:this.state.subImages.push(res)  //这样写只是做了一个数组的推送，返回的是数组的长度
      })
+    //  console.log(this.state.subImages,typeof(this.state.subImages))
     }
     //上传图片失败
     onUploadError(error){
        _mm.errorTips(error.message||'上传图片失败')
+    }
+    onImageDelete(e){
+        // let index = e.target.index, //这里不能取到,因为index不是自带的属性
+        let index = parseInt(e.target.getAttribute('index')),
+            subImages = this.state.subImages;
+            subImages.splice(index,1);
+            this.setState({
+                subImages:subImages
+            })
     }
     render() {
 
@@ -85,18 +100,19 @@ class ProductSave extends React.Component {
                         <div className="col-md-10">
 
                           {
-                              this.state.subImages.length?this.state.subImages.map(
-                                  (image,index)=>(<img key={index} src={image.url}/>)
+                              this.state.subImages.length>0?this.state.subImages.map(
+                                  (image,index)=>(
+                                 <div className="img-con">
+                                      <img className="img"  key={index}  src={image.url}/>
+                                      <i className="fa fa-close" index={index} onClick={(e)=>this.onImageDelete(e)}></i>
+                                 </div>
+                                  )
 
                               ):(<div>请上传图片</div>)
                           }
                            
                         </div>
-                    </div>
-
-                    <div className="form-group">
-                        <label className="col-md-2 control-label">商品图片</label>
-                        <div className="col-md-10">
+                        <div className="col-md-offset-2 col-md-10 file-upload-con">
                            <FileUploader onSuccess={(res)=>{this.onUploadSuccess(res)}}
                            onError={(res)=>{this.onUploadError(res)}}
                            />
