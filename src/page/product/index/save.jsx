@@ -1,6 +1,7 @@
 import React from 'react';
 import PageTitle from '../../../components/page-title/index.jsx'
 import MUtil from '../../../util/mm.jsx'
+import RichEditor from '../../../util/rich-editor/index.jsx'
 import Product from '../../../service/product-service.jsx'
 import CategorySelector from './category-selector.jsx'
 import FileUploader from '../../../util/file-uploader/index.jsx'
@@ -43,6 +44,9 @@ class ProductSave extends React.Component {
             this.setState({
                 subImages:subImages
             })
+    }
+    onRichEditorChange(){
+
     }
     render() {
 
@@ -122,7 +126,7 @@ class ProductSave extends React.Component {
                     <div className="form-group">
                         <label className="col-md-2 control-label">商品详情</label>
                         <div className="col-md-10">
-                          ccc
+                          <RichEditor onValueChange = {(e)=>{this.onRichEditorChange(e)}}/>
                         </div>
                     </div>
                    
