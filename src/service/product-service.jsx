@@ -22,6 +22,16 @@ class Product {
 
         })
     }
+    //获取商品详情
+    getProduct(productId){
+        return _mm.request({
+            type:'post',
+            url:'/manage/product/detail.do',
+            data:{
+                productId:productId ||0
+            }
+        })
+    }
     //变更商品销售状态
     setProductStatus(productInfo) {
         return _mm.request({
@@ -48,33 +58,41 @@ class Product {
         if (typeof product.subtitle !== 'string' || product.subtitle.length == 0) {
             return {
                 status: false,
-                msg: '请输入正确的商品'
+                msg: '商品描述不能为空'
+            }
+        }
+         //品类的ID
+         if (typeof product.categoryId !== 'number' || !(product.categoryId > 0)) {
+            return {
+                status: false,
+                msg: '请选择商品品类'
             }
         }
         //判断商品价格为数字且大于零
-        if (typeof product.price !== 'number' || product.price.length <= 0) {
+        if (typeof product.price !== 'number' || !(product.price >= 0)) {
             return {
                 status: false,
                 msg: '商品价格为数字且大于零'
             }
         }
         //判断库存为数字，且大于或等于0
-        if (typeof product.stock !== 'number' || product.stock < 0) {
+        if (typeof product.stock !== 'number' || !(product.stock >=0)) {
             return {
                 status: false,
                 msg: '请输入正确的库存数量！'
             }
         }
-        //品类的ID
-        if (typeof product.productId !== 'number' || product.productId < 0) {
-            return {
-                status: false,
-                msg: '请选择商品品类'
-            }
-        }
+       
         return result
     }
     //保存商品
+    saveProduct(product){
+        return _mm.request({
+            type:'post',
+            url:'/manage/product/save.do',
+            data:product
+        })
+    }
     /*
     * 品类相关
     */
