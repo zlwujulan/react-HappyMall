@@ -6,7 +6,6 @@ import Product from '../../../service/product-service.jsx'
 import CategorySelector from './category-selector.jsx'
 import FileUploader from '../../../util/file-uploader/index.jsx'
 import './save.css'
-import { of } from 'rxjs';
 const _mm = new MUtil();
 const _product = new Product();
 class ProductSave extends React.Component {

@@ -13,7 +13,8 @@ class ProductRouter extends React.Component {
           <Router>
              <Switch>
                 <Route path="/product/index" component={ProductList}></Route>
-                <Route  path="/product/save/:pid" component={ProductSave}></Route>
+                {/* jia ?表示是可选的，都匹配到该路径 */}
+                <Route  path="/product/save/:pid?" component={ProductSave}></Route>  
                 <Route  path="/product/detail/:pid" component={ProductDetail}></Route>
                 <Redirect exact from="/product" to="/product/index"></Redirect>
                
