@@ -97,7 +97,7 @@ class ProductList extends React.Component {
          <div id="page-wrapper">
 
             <div className="row">
-               <PageTitle title="商品列表">
+               <PageTitle title={this.state.id?'编辑商品':'添加商品'}>
                   <div className="page-header-right">
                      <Link to="/product/save" className="btn btn-primary">
                         <i className="fa fa-plus"></i>
