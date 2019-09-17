@@ -20,6 +20,20 @@ class CategoryList extends React.Component {
    componentDidMount(){
        this.loadCategoryList()
    }
+   //在更新 阶段，判断路径发生变化，展示子品类数据
+   componentDidUpdate(prevProps,prevState){
+    //    console.log(this.props.match.params.categoryId)
+    let oldPath = prevProps.location.pathname,
+        newPath = this.props.location.pathname,
+        newId = this.props.match.params.categoryId ||0
+   if(oldPath !== newPath){
+       this.setState({
+           parentCategoryId:newId
+       },()=>{
+          this.loadCategoryList()
+       })
+   }
+   }
   //加载品类列表
    loadCategoryList(){
          _product.getCategoryList(this.state.parentCategoryId).then(res=>{
@@ -42,6 +56,7 @@ class CategoryList extends React.Component {
            categoryName:categoryName
        }).then(res =>{
            _mm.successTips(res)
+           this.loadCategoryList()
        },errMsg =>{
            _mm.errorTips(errMsg)
        })
@@ -59,6 +74,12 @@ class CategoryList extends React.Component {
                 onClick={(e)=>this.onUpdateName(category.id,category.name)}>
                     修改名称
                 </a>
+                {
+                    category.parentId ===0?
+                    <Link to={`/product-category/index/${category.id}`}>查看子品类</Link>
+                    :null
+                }
+                {/* 组件不变化，不会重新加载，但是会触发组件的更新 ，所以更新事件里捕获*/}
             </td>
             
      
@@ -68,6 +89,12 @@ class CategoryList extends React.Component {
           return(
             <div id="page-wrapper">
             <PageTitle title="品类列表" />
+            <div className="page-header-right">
+                <Link to="/product-category/add" className="btn btn-primary">
+                    <i className="fa fa-plus" ></i>
+                    <span>添加品类</span>
+                </Link>
+            </div>
            <div className="row">
           <div className="col-md-12">
               <p>父品类ID：{this.state.parentCategoryId}</p>
